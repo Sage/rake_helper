@@ -1,0 +1,27 @@
+task_group :spec do
+  rspec coverage: 100
+end
+
+task_group :docs do
+  task :yard, coverage: 100
+end
+
+task_group :codestyle do
+  task :cane, max_width: 120
+end
+
+task_group :duplication do
+  task :flay, exclude: '^\.\/spec\/'
+end
+
+task_group :complexity do
+  task :flog, exclude: '^\.\/spec\/', methods: true
+end
+
+build :default do
+  task_group :docs
+  task_group :codestyle
+  task_group :complexity
+  task_group :duplication
+  task_group :spec
+end

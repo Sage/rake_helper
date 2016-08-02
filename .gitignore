@@ -1,0 +1,12 @@
+*.gem
+.DS_Store
+.bundle
+Gemfile.lock
+pkg/*
+coverage/
+.yardoc/
+doc/
+*.swp
+tmp/
+.idea/
+*.log
