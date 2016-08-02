@@ -7,19 +7,21 @@ describe RakeHelper do
 
   subject { DummyRake.new }
 
+  let(:message) { 'message' }
+
   before { allow($stdout).to receive(:write) }
 
   describe '#success' do
     it 'logs as info with the SUCCESS keyword' do
-      expect(Rails.logger).to receive(:info).with(a_string_including('SUCCESS'))
-      subject.success('message')
+      expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including('SUCCESS'))
+      subject.success(message)
     end
   end
 
   describe '#failure' do
     it 'logs as error with the FAILURE keyword' do
-      expect(Rails.logger).to receive(:error).with(a_string_including('FAILURE'))
-      subject.failure('message')
+      expect(Rails).to receive_message_chain(:logger, :error).with(a_string_including('FAILURE'))
+      subject.failure(message)
     end
   end
 
@@ -52,12 +54,13 @@ describe RakeHelper do
     it 'calls put_and_log for valid severities' do
       Logger::Severity.constants.each do |s|
         severity = s.downcase
-        expect{subject.public_send(severity, 'message')}.not_to raise_error
+        expect(subject).to receive(:put_and_log).with(message: message, type: severity)
+        subject.public_send(severity, message)
       end
     end
 
     it 'calls super for invalid severities' do
-      expect{subject.invalid('message')}.to raise_error(NoMethodError)
+      expect{subject.invalid(message)}.to raise_error(NoMethodError)
     end
   end
 end

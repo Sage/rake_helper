@@ -8,5 +8,3 @@ require 'pry'
 require 'rails'
 require 'active_record'
 require 'rake_helper'
-
-Rails.logger = Logger.new(File.join('spec', 'log', 'test.log'))
