@@ -11,10 +11,17 @@ describe RakeHelper do
 
   before { allow($stdout).to receive(:write) }
 
-  describe '#success' do
-    it 'logs as info with the SUCCESS keyword' do
-      expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including('SUCCESS'))
-      subject.success(message)
+  describe '#start' do
+    it 'logs as info with the START keyword' do
+      expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including('START'))
+      subject.start(message)
+    end
+  end
+
+  describe '#finish' do
+    it 'logs as info with the FINISH keyword' do
+      expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including('FINISH'))
+      subject.finish(message)
     end
   end
 
@@ -34,19 +41,19 @@ describe RakeHelper do
 
     it 'executes a single statement' do
       expect(connection).to receive(:execute).once
-      subject.run_sql(sql: sql1)
+      subject.run_sql(sql1)
     end
 
     it 'executes multiple statements' do
       expect(connection).to receive(:execute).twice
-      subject.run_sql(sql: sql1 + sql2)
+      subject.run_sql(sql1 + sql2)
     end
 
     it 'returns results' do
       sql = "UPDATE users SET name = 'Bob' WHERE id = 4"
       count = 5
       allow(connection).to receive(:update) { count }
-      expect(subject.run_sql(sql: sql, action: :update)).to eq([count])
+      expect(subject.run_sql(sql, action: :update)).to eq([count])
     end
   end
 

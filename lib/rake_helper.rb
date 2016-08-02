@@ -2,8 +2,13 @@
 module RakeHelper
 
   # @param message [String]
-  def success(message)
-    put_and_log(message: "SUCCESS: #{message}", type: :info)
+  def start(message)
+    put_and_log(message: "START: #{message}", type: :info)
+  end
+
+  # @param message [String]
+  def finish(message)
+    put_and_log(message: "FINISH: #{message}", type: :info)
   end
 
   # @param message [String]
@@ -14,7 +19,7 @@ module RakeHelper
   # @param sql [String] valid sql, can include several statements separated by semicolons
   # @param action [Symbol] any valid ActiveRecord::ConnectionAdapters::DatabaseStatements method name
   # @return [Array] the query results
-  def run_sql(sql:, action: :execute)
+  def run_sql(sql, action: :execute)
     results = []
     sql.strip.split(';').each do |s|
       results << ActiveRecord::Base.connection.public_send(action, s)
