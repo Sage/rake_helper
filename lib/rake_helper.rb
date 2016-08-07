@@ -16,7 +16,7 @@ module RakeHelper
     put_and_log(message: "FAILURE: #{message}", type: :error)
   end
 
-  # @param sql [String] valid sql, can include several statements separated by semicolons
+  # @param sql [String] valid SQL, can include several statements separated by semicolons
   # @param action [Symbol] any valid ActiveRecord::ConnectionAdapters::DatabaseStatements method name
   # @return [Array] the query results
   def run_sql(sql, action: :execute)

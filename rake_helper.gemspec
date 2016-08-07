@@ -9,7 +9,9 @@ Gem::Specification.new do |s|
   s.files       = Dir['lib/**/*']
   s.require_path = 'lib'
 
+  s.required_ruby_version = '>= 2.1'
   s.add_dependency 'rails', '>= 3'
+
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'fudge'
   s.add_development_dependency 'yard'
