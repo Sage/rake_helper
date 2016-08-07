@@ -23,7 +23,7 @@ include RakeHelper
 
 ## Usage
 
-#### Logging Messages
+### Logging Messages
 
 These output a timestamped `puts` statement in the terminal for the benefit 
 of the person running the rake task, but also log a message in the Rails 
@@ -31,21 +31,21 @@ log in case it is missed in a long stream of output.
 
 There are 3 predefined methods which prepend a standardized keyword:
 
-##### start
+#### start
 Logs as type `:info`
 ```ruby
 start('Updating user records')
 # => 2016-08-07 13:02:51 -0400 START: Updating user records
 ```
 
-##### finish
+#### finish
 Logs as type `:info`
 ```ruby
 finish('Updating user records')
 # => 2016-08-07 13:04:28 -0400 FINISH: Updating user records
 ```
 
-##### failure
+#### failure
 Logs as type `:error`
 ```ruby
 failure("Updating user records: #{e}")
@@ -67,7 +67,7 @@ info('Useful information')
 # => 2016-08-07 13:03:16 -0400 Useful information
 ```
 
-#### Running SQL Statements
+### Running SQL Statements
 
 The `run_sql` method will execute one or more SQL statements and return the
 results as an `Array`. The first param is required and should be a valid SQL
@@ -76,7 +76,7 @@ You can pass an `action` option which should be any valid
 [ActiveRecord::ConnectionAdapters::DatabaseStatements](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/DatabaseStatements.html)
 method name as a symbol.
 
-##### :update example
+#### :update example
 ```ruby
 sql = <<-SQL
   UPDATE users SET activated = 1 WHERE created_at > 2016-01-01;
@@ -92,7 +92,7 @@ info("User count: #{results.first}, Business count: #{results.last}")
 # => 2016-08-07 13:11:45 -0400 "User count: 10, Business count: 1"
 ```
 
-##### :select_value example
+#### :select_value example
 ```ruby
 sql = <<-SQL
   SELECT id FROM users WHERE email = 'bob@example.com'; 
@@ -103,7 +103,7 @@ info("Bob's ID: #{results.first}")
 # => 2016-08-07 13:11:45 -0400 "Bob's ID: 15"
 ```
 
-##### :delete example
+#### :delete example
 ```ruby
 sql = <<-SQL
   DELETE FROM users WHERE created_at < 2016-01-01 AND activated = 0; 
@@ -118,9 +118,9 @@ info("Num users deleted: #{results.first}")
 # => 2016-08-07 13:11:45 -0400 "Num users deleted: 52" 
 ```
 
-#### Full Example
+### Full Example
 
-##### Rake File
+#### Rake File
 ```ruby
 # lib/tasks/update_locales.rake
 
@@ -143,14 +143,14 @@ task update_locales: :environment do
 end
 ```
 
-##### Successful Run
+#### Successful Run
 ```sh
 $ bundle exec rake update_locales
 2016-08-07 13:57:56 -0400 START: Updating US locales
 2016-08-07 13:57:56 -0400 FINISH: Updating US locales
 ```
 
-##### Failed Run
+#### Failed Run
 ```sh
 $ bundle exec rake update_locales
 2016-08-07 14:07:50 -0400 START: Updating US locales
