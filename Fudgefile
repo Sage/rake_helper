@@ -1,3 +1,7 @@
+task_group :release_notes_check, about: 'Check release notes syntax' do
+  shell 'renogen test'
+end
+
 task_group :spec do
   rspec coverage: 100
 end
@@ -19,6 +23,7 @@ task_group :complexity do
 end
 
 build :default do
+  task_group :release_notes_check
   task_group :docs
   task_group :codestyle
   task_group :complexity
