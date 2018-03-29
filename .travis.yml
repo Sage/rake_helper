@@ -1,0 +1,21 @@
+language: ruby
+rvm:
+  - 2.3.4
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+    > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - "./cc-test-reporter before-build"
+after_script:
+  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+deploy:
+  provider: rubygems
+  api_key:
+    secure: C48jIgyCJxAD0N9QmmeefOx2e/MoxKjkcAsC8OxgCZQUM7KNYOmdYb/cCv3wS/3GooKwmZrU9GNj1ucJzV8PS0dMyYcDdRskGATGdYIvdxeV8vtWTxAU7jSupPZHPmrElZUgYecln+n9sgbhH0Ke3X95RdBjaQDQfaZc8HtMJcO7MEKG+tYi/KWmqgmcT/etHzzINXslVAftABJNt4whYSryV0rZk0yYmlWV/85vWDKBK10+WZxXsxaiPtXA0Q9ji9EqghZbNjNILQ1pzDT8L3PPkKKCHcsVR76FtuF2WDFdoQmesg5Bs0GxDZOrCoAMCJvF/MuM8T+iARkxaMOh9UnP5gr8w2rls8sDO8B4QTspx4riywxCZpv8+AIWddMTeNk2j8yxTz2whDEJ/8wJpJmOy7RacPOMEDbwIM059hntlQWHKJ0IzMPbcCDp9IF4itQlWBK2CWlrAVQbKWDMA9s/6OZrOuRnDxl034VtlkPL+JznGtkJoUTBG6sZTS0bdp3MhWVcorJFHCiPZnagQGmZw22BebusM8O1CCkgsDs7OgygPqjR08Ph1uHPVHGT06aHd0D0XhmwDePoCnEB+O1gS0oy4gEOYvTppB6ttfpfpJ3MDShPQgS0HbbZgFRs6JJJzLCR8QGYKht4d7UCll7eZM8ot65xTWmVgKhxdWk=
+  gem: rake_helper
+  on:
+    tags: true
+    repo: Sage/rake_helper
+env:
+  global:
+    secure: SIz/hUXJbUg/YkEw3XXVgS35NajmgnCMCTJ2G6LNAo9YB00cjGFQhayX3iq3PisA9gch740Kv2yskNYIFk9bQoMH8FFmpybmtSVGIi53Zzbqd/dRXaMuXKQGu50gO+jj8+uhyqouY3KcMHOy1QoceFp0h5Sn9GkDe8jjlWKgGFpr/P2QW9lgJOtE0cbUc4sbekFmu1mHy1aPSEZ0GTgi8S4YzPE5MoeAzfZSAl84R3npQ7EmTAMTT5+pZ7SqS4KB8E+DA99ZNiWBGPCi1fAlt2K2K3zWLigwjQvw8li9DOclQ0UiZviOhdv1XOAfYzdurBU4noMCZdLDZkT9ThfpTXa00Nf4gD+UECkSUGZ+dtPQlqVcUegV9fsgef17F3I7D1w3e+oPdSVOMlL80g92IfLedraUxlwLCAVA9T0IFN+m3BltBmMDBewXTwSrqMHsI8aQmoNksZJ5DHo7xqJkMbzsrmGnxEYZEm8N+4/FxS2oIBhbGqeDvi76dCerUB/fTExeh4MVDw38jrL0CiG5c2Ea+ilaXmhhRV8kJwwfDDoc5GmONw7URrjkc44nciNyiy+FYc/U1wYeJXjzOeZlF8s9xVxADy9prxW2j3pEtfi1IwNBvQbgLicq7c9xXIfSJs9Pv5x5lTUkPs7F0KrtGxTsxG6Lj/4y8aP2J8V1oc8=
