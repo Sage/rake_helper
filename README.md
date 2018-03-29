@@ -1,6 +1,4 @@
-# rake_helper
-
-[ ![Codeship Status for dchopson/rake_helper](https://codeship.com/projects/4243c0e0-3a79-0134-4812-3e7f3bc4dc3e/status?branch=master)](https://codeship.com/projects/166332) [![Gem Version](https://badge.fury.io/rb/rake_helper.svg)](https://badge.fury.io/rb/rake_helper)
+# rake_helper [![Build Status](https://travis-ci.org/Sage/rake_helper.svg?branch=master)](https://travis-ci.org/Sage/rake_helper) [![Maintainability](https://api.codeclimate.com/v1/badges/a0c3d698f12736c976f5/maintainability)](https://codeclimate.com/github/Sage/rake_helper/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/a0c3d698f12736c976f5/test_coverage)](https://codeclimate.com/github/Sage/rake_helper/test_coverage) [![Gem Version](https://badge.fury.io/rb/rake_helper.svg)](https://badge.fury.io/rb/rake_helper)
 
 A set of common helper methods to DRY up Rails rake tasks
 
