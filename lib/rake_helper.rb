@@ -2,18 +2,21 @@
 module RakeHelper
 
   # @param message [String]
-  def start(message)
-    put_and_log(message: "START: #{message}", type: :info)
+  def start(message, *params)
+    message = params.empty? ? "START: #{message}" : params_to_message(params, prepend: 'START')
+    put_and_log(message: message, type: :info)
   end
 
   # @param message [String]
-  def finish(message)
-    put_and_log(message: "FINISH: #{message}", type: :info)
+  def finish(message, *params)
+    message = params.empty? ? "FINISH: #{message}" : params_to_message(params, prepend: 'FINISH')
+    put_and_log(message: message, type: :info)
   end
 
   # @param message [String]
-  def failure(message)
-    put_and_log(message: "FAILURE: #{message}", type: :error)
+  def failure(message, *params)
+    message = params.empty? ? "FAILURE: #{message}" : params_to_message(params, prepend: 'FAILURE')
+    put_and_log(message: message, type: :error)
   end
 
   # @param sql [String] valid SQL, can include several statements separated by semicolons
@@ -32,6 +35,12 @@ module RakeHelper
   def put_and_log(message:, type:)
     puts "#{Time.now} #{message}"
     Rails.logger.public_send(type, message)
+  end
+
+  def params_to_message(params, prepend:)
+    sql_hash = params.last
+    msg = sql_hash.is_a?(Hash) && sql_hash.key?(:sql) ? sql_hash[:sql] : 'Unidentified Call'
+    "#{prepend}: #{msg}"
   end
 
   def method_missing(method, *args)

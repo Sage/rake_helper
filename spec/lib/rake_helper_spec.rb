@@ -8,6 +8,11 @@ describe RakeHelper do
   subject { DummyRake.new }
 
   let(:message) { 'message' }
+  let(:params) do
+    ['1234', { sql: query }]
+  end
+  let(:incorrect_params) { [:foo, :bar] }
+  let(:query) { 'SELECT something FROM table' }
 
   before { allow($stdout).to receive(:write) }
 
@@ -16,6 +21,16 @@ describe RakeHelper do
       expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including('START'))
       subject.start(message)
     end
+
+    it 'allows for the Hash message format' do
+      expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including("START: #{query}"))
+      subject.start(message, *params)
+    end
+
+    it 'with incorrect params logs, but marks the call as unidentified' do
+      expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including("START: Unidentified Call"))
+      subject.start(message, *incorrect_params)
+    end
   end
 
   describe '#finish' do
@@ -23,12 +38,32 @@ describe RakeHelper do
       expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including('FINISH'))
       subject.finish(message)
     end
+
+    it 'allows for the Hash message format' do
+      expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including("FINISH: #{query}"))
+      subject.finish(message, *params)
+    end
+
+    it 'with incorrect params logs, but marks the call as unidentified' do
+      expect(Rails).to receive_message_chain(:logger, :info).with(a_string_including("START: Unidentified Call"))
+      subject.start(message, *incorrect_params)
+    end
   end
 
   describe '#failure' do
     it 'logs as error with the FAILURE keyword' do
       expect(Rails).to receive_message_chain(:logger, :error).with(a_string_including('FAILURE'))
       subject.failure(message)
+    end
+
+    it 'allows for the Hash message format' do
+      expect(Rails).to receive_message_chain(:logger, :error).with(a_string_including("FAILURE: #{query}"))
+      subject.failure(message, *params)
+    end
+
+    it 'with incorrect params logs, but marks the call as unidentified' do
+      expect(Rails).to receive_message_chain(:logger, :error).with(a_string_including("FAILURE: Unidentified Call"))
+      subject.failure(message, *incorrect_params)
     end
   end
 
