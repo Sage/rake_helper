@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'rake_helper'
-  s.version     = '1.0.0.rc1'
+  s.version     = '1.0.1'
   s.license     = 'MIT'
   s.summary     = 'A set of common helper methods to DRY up Rails rake tasks'
   s.author      = 'Daniel Chopson'

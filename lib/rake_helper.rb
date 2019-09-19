@@ -3,20 +3,17 @@ module RakeHelper
 
   # @param message [String]
   def start(message, *params)
-    message = params.empty? ? "START: #{message}" : params_to_message(params, prepend: 'START')
-    put_and_log(message: message, type: :info)
+    put_and_log(message: "START: #{obtain_message(message, *params)}", type: :info)
   end
 
   # @param message [String]
   def finish(message, *params)
-    message = params.empty? ? "FINISH: #{message}" : params_to_message(params, prepend: 'FINISH')
-    put_and_log(message: message, type: :info)
+    put_and_log(message: "FINISH: #{obtain_message(message, *params)}", type: :info)
   end
 
   # @param message [String]
   def failure(message, *params)
-    message = params.empty? ? "FAILURE: #{message}" : params_to_message(params, prepend: 'FAILURE')
-    put_and_log(message: message, type: :error)
+    put_and_log(message: "FAILURE: #{obtain_message(message, *params)}", type: :error)
   end
 
   # @param sql [String] valid SQL, can include several statements separated by semicolons
@@ -31,16 +28,21 @@ module RakeHelper
   end
 
   private
+  def obtain_message(message, *params)
+    params.empty? ? message : params_to_message(params)
+  end
 
   def put_and_log(message:, type:)
     puts "#{Time.now} #{message}"
     Rails.logger.public_send(type, message)
   end
 
-  def params_to_message(params, prepend:)
-    sql_hash = params.last
-    msg = sql_hash.is_a?(Hash) && sql_hash.key?(:sql) ? sql_hash[:sql] : 'Unidentified Call'
-    "#{prepend}: #{msg}"
+  def params_to_message(params)
+    message_from_hash(params.last)
+  end
+
+  def message_from_hash(sql_hash)
+    sql_hash.is_a?(Hash) && sql_hash[:sql] ? sql_hash[:sql] : 'Unidentified Call'
   end
 
   def method_missing(method, *args)
